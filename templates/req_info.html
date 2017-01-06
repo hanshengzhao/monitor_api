@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请求信息记录</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+
+<table class="table">
+	<h3>请求记录</h3>
+	<thead>
+		<tr>
+			<th>请求用户</th>
+			<th>服务id</th>
+			<th>服务名称</th>
+			<th>服务状态</th>
+			<th>是否报警</th>
+			<th>报警方式</th>
+			<th>检测间隔</th>
+			<th>请求时间</th>
+			<th>其他信息</th>
+
+		</tr>
+	</thead>
+	<tbody>
+    {% for req in req_lists  %}
+		<tr class="active">
+			<td>  {{ req.req_user            }}</td>
+			<td>  {{ req.server_id           }}</td>
+			<td>  {{ req.server_name         }}</td>
+			<td>  {{ req.server_status }}</td>
+			<td>  {{ req.is_alarm }}</td>
+			<td>  {{ req.alarm           }}</td>
+			<td>  {{ req.interval            }}</td>
+			<td>  {{ req.req_date            }}</td>
+			<td>  {{ req.other           }}</td>
+		</tr>
+    {% endfor %}
+	</tbody>
+
+</table>
+{% include 'paginator.html' %}
+    <script src="/static/js/jquery-2.1.1.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>

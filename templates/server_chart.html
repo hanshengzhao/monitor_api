@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" http-equiv="refresh"content="5">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <title>{{ project_name }}详细视图</title>
+</head>
+<body>
+<div id="container" style="min-width:400px;height:400px"></div>
+
+
+<script src="/static/js/jquery-2.1.1.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/highcharts.js"></script>
+
+<script>
+    $(function () {
+
+        $('#container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'API监控系统视图-服务'
+            },
+            subtitle: {
+                text: 'Source: rmdb.transwiseway.com'
+            },
+            xAxis: {
+                categories: [{% for data in datas %}'{{ data.project }}'{% if not forloop.last %}, {% endif %}{% endfor %}],
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '最近半小时数据',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+
+
+            tooltip: {
+                valueSuffix: '次'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -40,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: '报警次数',
+                data: [{% for data in datas %}{{ data.alarm_count }}{% if not forloop.last %}, {% endif %}{% endfor %}]
+            }, {
+                name: '不可达次数',
+                data: [{% for data in datas %}{{ data.unreachable_count }}{% if not forloop.last %}, {% endif %}{% endfor %}]
+            }, {
+                name: '成功次数',
+                data: [{% for data in datas %}{{ data.normal_count }}{% if not forloop.last %}, {% endif %}{% endfor %}]
+            }],
+
+            colors: ['red', 'black', 'green'],
+
+        });
+    });
+
+</script>
+
+
+</body>
+</html>
